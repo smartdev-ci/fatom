@@ -2,8 +2,17 @@
   <section class="bureau-fatom">
     <h3>BUREAU FATOM</h3>
     <div class="countries">
-      <div v-for="country in countries" :key="country.name" class="country-card">
-        <img :src="country.flag" :alt="`Drapeau de ${country.name}`" class="flag" />
+      <div
+        v-for="country in countries"
+        :key="country.id"
+        class="country-card"
+        @click="goToCategoryPosts(country.id)"
+      >
+        <img
+          :src="country.flag"
+          :alt="`Drapeau de ${country.name}`"
+          class="flag"
+        />
         <div class="country-name">{{ country.name }}</div>
       </div>
     </div>
@@ -15,15 +24,22 @@ export default {
   data() {
     return {
       countries: [
-        { name: "Côte d'Ivoire", flag: "/assets/flags/cote-divoire.png" },
-        { name: "France", flag: "/assets/flags/france.png" },
-        { name: "Bénin", flag: "/assets/flags/benin.png" },
-        { name: "Niger", flag: "/assets/flags/niger.jpg" },
-        { name: "Guinée", flag: "/assets/flags/guinee.svg" },
-        { name: "Burkina Faso", flag: "/assets/flags/burkina-faso.jpg" },
-        { name: "Mali", flag: "/assets/flags/mali.png" },
+        // { id: 15, name: "France", flag: "/assets/flags/france.png", url: "https://example.com/france" },
+        { id: 17, name: "Bénin", flag: "/assets/flags/benin.png", url: "https://example.com/benin" },
+        { id: 18, name: "Niger", flag: "/assets/flags/niger.jpg", url: "https://example.com/niger" },
+        // { id: 30, name: "Guinée", flag: "/assets/flags/guinee.png", url: "https://example.com/guinee" },
+        { id: 16, name: "Burkina Faso", flag: "/assets/flags/burkina-faso.jpg", url: "https://example.com/burkina-faso" },
+        { id: 19, name: "Mali", flag: "/assets/flags/mali.png", url: "https://example.com/mali" },
       ],
     };
+  },
+  methods: {
+    goToCategoryPosts(categoryId) {
+      this.$router.push({
+        name: "PostByCategoryView",
+        params: { categoryId: categoryId },
+      });
+    },
   },
 };
 </script>
@@ -53,6 +69,7 @@ export default {
   padding: 15px;
   border-radius: 5px;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .flag {

@@ -1,35 +1,50 @@
-<!-- src/components/Footer.vue -->
 <template>
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-column">
         <h4>ACCUEIL</h4>
         <ul>
-          <li><a href="#">Qui sommes-nous ?</a></li>
+          <li><router-link to="/" class="nav-link" exact-active-class="active-link">ACCUEIL</router-link></li>
         </ul>
       </div>
       <div class="footer-column">
         <h4>A PROPOS</h4>
         <ul>
-          <li><a href="#">Qui sommes-nous ?</a></li>
-          <li><a href="#">Notre mission</a></li>
-          <li><a href="#">Nos domaines d'activités</a></li>
+          <li><router-link to="/about" class="nav-link" exact-active-class="active-link">Qui sommes-nous?</router-link></li>
+          <li><router-link to="/activities" class="nav-link" exact-active-class="active-link">Nos domaines d'activités</router-link></li>
+          <li><router-link to="/partners" class="nav-link" exact-active-class="active-link">Nos partenaires</router-link></li>
         </ul>
       </div>
       <div class="footer-column">
         <h4>ACTIVITÉS</h4>
         <ul>
-          <li><a href="#">Dans la santé</a></li>
-          <li><a href="#">Dans l'éducation</a></li>
-          <li><a href="#">Dans la culture</a></li>
-          <li><a href="#">Dans l'environnement</a></li>
+          <li>
+            <router-link to="/categories/2" class="nav-link" exact-active-class="active-link">Dans la santé</router-link>
+          </li>
+          <li>
+            <router-link to="/categories/3" class="nav-link" exact-active-class="active-link">Dans l'éducation</router-link>
+          </li>
+          <li>
+            <router-link to="/categories/4" class="nav-link" exact-active-class="active-link">Dans la culture</router-link>
+          </li>
+          <li>
+            <router-link to="/categories/5" class="nav-link" exact-active-class="active-link">Dans l'environnement</router-link>
+          </li>
         </ul>
       </div>
       <div class="footer-column">
-        <h4>PARTENAIRES</h4>
+        <h4>CONTACTS</h4>
       </div>
       <div class="footer-column">
-        <h4>CONTACTS</h4>
+        <h4>Télécharger notre canevas</h4>
+        <ul>
+          <li>
+            <!-- Lien de téléchargement PDF -->
+            <a href="/documents/Fondation-Canevas.docx" class="nav-link" download>
+              <i class="fas fa-file-pdf"></i> Télécharger notre document
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="footer-social">
@@ -45,6 +60,7 @@
   background-color: #333;
   color: white;
   padding: 40px 20px;
+  margin-top: 20px;
 }
 
 .footer-container {
@@ -80,6 +96,13 @@
   color: #cccccc;
   text-decoration: none;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.footer-column ul li a i {
+  margin-right: 8px;
+  font-size: 18px;
 }
 
 .footer-column ul li a:hover {

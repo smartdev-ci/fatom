@@ -1,29 +1,48 @@
-<!-- src/components/ReportsSection.vue -->
 <template>
   <section class="reports-section">
     <h2>LES RAPPORTS DE LA FATOM</h2>
     <div class="reports-grid">
-      <div class="report-card">
-        <div class="report-image"></div>
-        <p>2024</p>
-      </div>
-      <div class="report-card">
-        <div class="report-image"></div>
-        <p>2023</p>
-      </div>
-      <div class="report-card">
-        <div class="report-image"></div>
-        <p>2022</p>
+      <div v-if="reports.length === 0">Aucun rapport disponible</div>
+      <div
+        v-else
+        v-for="report in reports.slice(0, 5)"
+        :key="report.id"
+        class="report-card"
+      >
+        <div class="report-image">
+          <img
+            v-if="report.featuredImage"
+            :src="report.featuredImage"
+            alt="Report Image"
+          />
+        </div>
+        <a v-if="report.pdfUrl" :href="report.pdfUrl" target="_blank">
+          <p>{{ report.name }}</p>
+        </a>
       </div>
     </div>
     <div class="view-all">
-      <a href="#">Voir tous les rapports <i class="fas fa-arrow-right"></i></a>
+      <router-link
+        to="/rapports"
+        class="nav-link"
+        exact-active-class="active-link"
+        >TOUS LES RAPPORTS <i class="fas fa-arrow-right"></i
+      ></router-link>
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapState(["reports"]),
+  },
+  created() {
+    this.$store.dispatch("fetchLastReports");
+  },
+};
 </script>
 
 <style scoped>
@@ -52,19 +71,32 @@ export default {};
   flex-direction: column;
   align-items: center;
   width: 120px;
-  height: 150px;
+  height: 215px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Animation lors du survol */
+}
+
+.report-card:hover {
+  transform: scale(1.05); /* Légère augmentation de l'échelle */
+  background-color: #e0e0e0; /* Changement de couleur de fond */
 }
 
 .report-image {
   width: 100%;
-  height: 100px;
+  height: 130px; /* Ajuster la hauteur pour mieux correspondre à la carte */
   background-color: #ccc;
   border-radius: 8px;
   margin-bottom: 10px;
+  overflow: hidden; /* Assure que l'image ne déborde pas du conteneur */
+}
+
+.report-image img {
+  width: 100%; /* S'assure que l'image occupe toute la largeur de son conteneur */
+  height: 100%; /* L'image occupera la hauteur définie pour le conteneur */
+  object-fit: cover; /* Cette propriété permet de garder l'image proportionnelle tout en la couvrant entièrement */
 }
 
 .report-card p {
@@ -75,14 +107,20 @@ export default {};
 
 .view-all {
   margin-top: 20px;
+  text-align: right;
+  margin-right: 20px;
 }
 
 .view-all a {
   font-size: 14px;
-  color: #333;
+  color: #fff;
+  background-color: #ff9800;
   text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   display: inline-flex;
   align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .view-all a i {
@@ -90,6 +128,11 @@ export default {};
 }
 
 .view-all a:hover {
-  text-decoration: underline;
+  background-color: #e68900;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
